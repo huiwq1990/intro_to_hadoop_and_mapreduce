@@ -20,8 +20,6 @@ def reducer():
     """
 
     reader = csv.reader(sys.stdin, delimiter='\t')
-    writer = csv.writer(sys.stdout, delimiter='\t',
-                        quotechar='"', quoting=csv.QUOTE_ALL)
 
     pre_author_id = -1
     hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
@@ -34,13 +32,7 @@ def reducer():
             author_id, hour = line
             # Same author_id will appear in succession cuz input is sorted.
             if (author_id != pre_author_id) and (pre_author_id >= 0):
-                d = dict((x, y) for x, y in zip(hours, counts))
-                for k, v in sorted(d.items(), 
-                                   key=itemgetter(1,0), reverse=True):
-                    if v != max(counts):
-                        break
-                    else:
-                        writer.writerow([pre_author_id, k])
+                write_hot_hour(hours, counts, pre_author_id)
 
                 for i in range(len(counts)):
                     counts[i] = 0
@@ -51,6 +43,20 @@ def reducer():
             else:
                 counts[int(hour)] += 1
                 pre_author_id = author_id
+
+    write_hot_hour(hours, counts, pre_author_id)
+
+def write_hot_hour(hours, counts, author_id):
+    writer = csv.writer(sys.stdout, delimiter='\t',
+                        quotechar='"', quoting=csv.QUOTE_ALL)
+
+    d = dict((x, y) for x, y in zip(hours, counts))
+    for k, v in sorted(d.items(), 
+                       key=itemgetter(1,0), reverse=True):
+        if v != max(counts):
+            break
+        else:
+            writer.writerow([author_id, k])
 
 def main():
     reducer()
