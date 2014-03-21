@@ -47,6 +47,11 @@ def reducer():
     write_hot_hour(hours, counts, pre_author_id)
 
 def write_hot_hour(hours, counts, author_id):
+    '''Write result
+    @param hours list that has 24 elements
+    @param counts list that has 24 elements
+    @param author_id
+    '''
     writer = csv.writer(sys.stdout, delimiter='\t',
                         quotechar='"', quoting=csv.QUOTE_ALL)
 
