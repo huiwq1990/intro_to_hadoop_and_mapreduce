@@ -10,7 +10,6 @@ import csv
 import re
 from datetime import datetime
 
-
 def mapper():
     """Select Output from Input.
 
