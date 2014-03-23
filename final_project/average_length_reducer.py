@@ -12,7 +12,7 @@ def reducer():
 
     Input (tab-delimited):
     - for question: "id" "node_type" "length_body"
-    - for answer: "abs_parent_id" "node_type" "length_body"
+    - for answer: "abs_parent_id" "node_type" "length_body" "id"
 
     Output (tab-delimited):
     "id" "length_body of question" "average length_body of answer"

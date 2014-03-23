@@ -19,7 +19,7 @@ def mapper():
 
     Output (tab-delimited):
     - for question: "id" "node_type" "length_body"
-    - for answer: "abs_parent_id" "node_type" "length_body"
+    - for answer: "abs_parent_id" "node_type" "length_body" "id"
     """
 
     reader = csv.reader(sys.stdin, delimiter='\t')
@@ -33,15 +33,16 @@ def mapper():
         elif not re.match(r, line[0].strip()): # skip header
             continue
         else:
-            id = line[0].strip()
+            node_id = line[0].strip()
             length_body = len(line[4].strip())
             node_type = line[5].strip()
             abs_parent_id = line[7].strip()
 
             if node_type == "question":
-                writer.writerow([id, node_type, length_body])
+                writer.writerow([node_id, node_type, length_body])
             elif node_type == "answer":
-                writer.writerow([abs_parent_id, node_type, length_body, id])
+                writer.writerow([abs_parent_id, node_type,
+                                 length_body, node_id])
 
 def main():
     mapper()
