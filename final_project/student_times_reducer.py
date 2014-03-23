@@ -9,6 +9,23 @@ import sys
 import csv
 from operator import itemgetter
 
+def write_hot_hour(hours, counts, author_id):
+    '''Write result
+    @param hours list that has 24 elements
+    @param counts list that has 24 elements
+    @param author_id
+    '''
+    writer = csv.writer(sys.stdout, delimiter='\t',
+                        quotechar='"', quoting=csv.QUOTE_ALL)
+
+    d = dict((x, y) for x, y in zip(hours, counts))
+    for k, v in sorted(d.items(), 
+                       key=itemgetter(1,0), reverse=True):
+        if v != max(counts):
+            break
+        else:
+            writer.writerow([author_id, k])
+
 def reducer():
     """Select Output from Input.
 
@@ -45,23 +62,6 @@ def reducer():
                 pre_author_id = author_id
 
     write_hot_hour(hours, counts, pre_author_id)
-
-def write_hot_hour(hours, counts, author_id):
-    '''Write result
-    @param hours list that has 24 elements
-    @param counts list that has 24 elements
-    @param author_id
-    '''
-    writer = csv.writer(sys.stdout, delimiter='\t',
-                        quotechar='"', quoting=csv.QUOTE_ALL)
-
-    d = dict((x, y) for x, y in zip(hours, counts))
-    for k, v in sorted(d.items(), 
-                       key=itemgetter(1,0), reverse=True):
-        if v != max(counts):
-            break
-        else:
-            writer.writerow([author_id, k])
 
 def main():
     reducer()
