@@ -17,7 +17,7 @@ def mapper():
     "last_edited_id" "last_activity_by_id" "last_activity_at"
     "active_revision_id" "extra" "extra_ref_id" "extra_count" "marked"
 
-    Output
+    Output:
     "tag"
     """
 
