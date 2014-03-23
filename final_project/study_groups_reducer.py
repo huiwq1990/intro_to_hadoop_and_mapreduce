@@ -13,7 +13,7 @@ def reducer():
     Input (tab-delimited):
     - for question: "id" "node_type" "autor_id"
     - for answer: "abs_parent_id" "node_type" "author_id" "id"
-    - fof comment: "abs_parent_id" "node_type" "author_id" "id"
+    - for comment: "abs_parent_id" "node_type" "author_id" "id"
 
     Output (tab-delimited):
     "id" "author_id"
