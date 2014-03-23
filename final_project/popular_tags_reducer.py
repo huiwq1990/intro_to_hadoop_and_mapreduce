@@ -6,10 +6,24 @@ Output Top 10 tags, ordered by the number of questions they appear in
 
 import sys
 import csv
+from operator import itemgetter
 
 def update_top10(top10, eleventh, ignore_val, count, pre_tag):
-    if len(eleventh) > 0: #####
-        print pre_tag, count
+    """Update Top 10 list.
+    
+    Update Top 10 list by given count and pre_tag.
+
+    Args:
+    	top10: Dictionary that holds Top 10 tags and its count.
+        eleventh: 11th tags and its count.
+        ignore_val: Tags which have count less than this variable
+        	can be ignored.
+        count: Count of current tag.
+        pre_tag: Name of previous tag.
+
+    Returns:
+    	ignore_val: Updated ignore_val.
+    """
     if len(top10) < 10:
         if (len(eleventh) > 0) and (count
                                     == eleventh.values()[0]):
@@ -35,20 +49,15 @@ def update_top10(top10, eleventh, ignore_val, count, pre_tag):
                     del(top10[k])
             top10[pre_tag] = count
 
-    print top10, len(top10)
-    print eleventh, len(eleventh)
-    print ignore_val
-    print "\n"
-
     return ignore_val
 
 def reducer():
-    """Select Output from Input.
+    """Select Output from Input
 
-    Input
+    Input:
     tag
 
-    Output
+    Output:
     Top 10 tags
     """
 
@@ -77,6 +86,12 @@ def reducer():
                 pre_tag = tag
 
     ignore_val = update_top10(top10, eleventh, ignore_val, count, pre_tag)
+
+    if len(top10) < 10:
+        top10.update(eleventh)
+
+    for k, v in sorted(top10.items(), key=itemgetter(1,0), reverse=True):
+        print k
 
 def main():
     reducer()
